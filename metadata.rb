@@ -1,11 +1,13 @@
 name 'aws-ssm'
-maintainer 'The Authors'
-maintainer_email 'you@example.com'
+maintainer 'Peter Green'
+maintainer_email 'peter.green@aztek-native.com'
 license 'All Rights Reserved'
-description 'Installs/Configures aws-ssm'
-long_description 'Installs/Configures aws-ssm'
+description 'Provides custom resources for interacting with AWS Simple Systems Manager (SSM).'
+long_description 'Inteded to provide access to AWS SSM, however it only currently supports Parameter Service.'
 version '0.1.0'
 chef_version '>= 12.1' if respond_to?(:chef_version)
+
+gem 'aws-sdk', '~> 3.0.1'
 
 # The `issues_url` points to the location where issues for this cookbook are
 # tracked.  A `View Issues` link will be displayed on this cookbook's page when
