@@ -13,14 +13,16 @@ verifier:
   name: inspec
 
 platforms:
-  - name: ubuntu-16.04
   - name: centos-7.3
 
 suites:
   - name: default
     run_list:
-      - recipe[aws-ssm::default]
+      - recipe[aws-ssm-test::default]
     verifier:
       inspec_tests:
         - test/smoke/default
     attributes:
+      aws-ssm-test:
+        aws_access_key_id: <%= ENV['AWS_ACCESS_KEY'] %>
+        aws_secret_access_key: <%= ENV['AWS_SECRET_KEY'] %>
