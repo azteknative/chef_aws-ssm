@@ -3,7 +3,7 @@ maintainer 'Peter Green'
 maintainer_email 'peter.green@aztek-native.com'
 license 'All Rights Reserved'
 description 'Provides custom resources for interacting with AWS Simple Systems Manager (SSM).'
-long_description 'Inteded to provide access to AWS SSM, however it only currently supports Parameter Service.'
+long_description 'Intended to provide access to AWS SSM, however it only currently supports Parameter Service.'
 version '0.1.0'
 chef_version '>= 12.1' if respond_to?(:chef_version)
 
