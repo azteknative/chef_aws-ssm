@@ -1,7 +1,7 @@
 require 'aws-sdk'
 
-class Chef::Recipe::AwsSsmProperty
-  def self.get_property(name, with_decryption=false, region, aws_access_key_id, aws_secret_access_key)
+class Chef::Recipe::AwsSsmParameterStore
+  def self.get_parameter(name, with_decryption=false, region, aws_access_key_id, aws_secret_access_key)
     if aws_access_key_id.nil? && aws_secret_access_key.nil?
       client = Aws::SSM::Client.new(region: region)
     else
