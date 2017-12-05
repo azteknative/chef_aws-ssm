@@ -10,6 +10,9 @@ class Chef::Recipe::AwsSsmParameterStore
 
     begin
       result = client.get_parameter({ name: name, with_decryption: with_decryption})
+    rescue Aws::SSM::Errors::ParameterNotFound
+      Chef::Log.debug("Parameter with name #{name} not found.")
+      return nil
     rescue Aws::SSM::Errors::ServiceError => e
       Chef::Log.fatal('Error querying SSM API!')
       Chef::Log.debug("Exception is: #{e}")
