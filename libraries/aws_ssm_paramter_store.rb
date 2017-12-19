@@ -21,7 +21,7 @@ class Chef::Recipe::AwsSsmParameterStore
     result.parameter.value
   end
 
-  def self.get_parameters_by_path(path, recursive=false, with_decryption=false, region, aws_access_key_id, aws_secret_access_key)
+  def self.get_parameters_by_path(path, recursive=false, with_decryption=false, region, aws_access_key_id, aws_secret_access_key, next_token)
     if aws_access_key_id.nil? && aws_secret_access_key.nil?
       client = Aws::SSM::Client.new(region: region)
     else
@@ -29,7 +29,7 @@ class Chef::Recipe::AwsSsmParameterStore
     end
 
     begin
-      result = client.get_parameters_by_path({ path: path, recursive: recursive, with_decryption: with_decryption})
+      result = client.get_parameters_by_path({ path: path, recursive: recursive, with_decryption: with_decryption, next_token: next_token})
     rescue Aws::SSM::Errors::ParameterNotFound
       Chef::Log.debug("Parameter with name #{name} not found.")
       return nil
@@ -40,6 +40,11 @@ class Chef::Recipe::AwsSsmParameterStore
     end
     parameters = {}
     result.parameters.each { |p|  parameters[p.name] = p.value }
+
+    unless result.next_token.nil?
+      parameters.merge!(get_parameters_by_path(path, recursive, with_decryption, region, aws_access_key_id, aws_secret_access_key, result.next_token))
+    end
+
     parameters
   end
 end
